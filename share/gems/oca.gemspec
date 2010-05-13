@@ -9,7 +9,7 @@ DEPS=[
 Gem::Specification.new do |s|
 
     s.name='OpenNebula-OCA'
-    s.version='1.3.80'
+    s.version='1.4'
 
     s.authors=['OpenNebula Team']
     s.files=Dir['bin/*']
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
     pp s.files
 
-    s.summary='description of the package'
+    s.summary='Basic CLI for Open Nebula'
 
     DEPS.each do |d|
         s.add_dependency d
