@@ -17,9 +17,9 @@
 
 $ec2url = nil
 
-if ENV["EC2_URL"]
-    $ec2url = ENV["EC2_URL"]
-    ENV["EC2_URL"]=nil
+if ENV["ECONE_URL"]
+    $ec2url = ENV["ECONE_URL"]
+    ENV["ECONE_URL"]=nil
 end
 
 require 'CloudClient'
@@ -44,8 +44,8 @@ module EC2QueryClient
             
             if secret
                 ec2auth = secret.split(':')
-            elsif ENV["EC2_ACCESS_KEY"] and ENV["EC2_SECRET_KEY"]
-                ec2auth = [ENV["EC2_ACCESS_KEY"], ENV["EC2_SECRET_KEY"]]
+            elsif ENV["ECONE_ACCESS_KEY"] and ENV["ECONE_SECRET_KEY"]
+                ec2auth = [ENV["ECONE_ACCESS_KEY"], ENV["ECONE_SECRET_KEY"]]
             else
                 ec2auth=CloudClient::get_one_auth
             end
