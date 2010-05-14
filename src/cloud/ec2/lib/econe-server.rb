@@ -45,6 +45,14 @@ require 'EC2QueryServer'
 
 include OpenNebula
 
+#
+# generate a parseable AWS-style error response
+# error_code should correspond to http://docs.amazonwebservices.com/AmazonS3/2006-03-01/API/index.html?ErrorCodeList.html
+#
+def to_aws_error(msg, error_code = "InternalError")
+        "<?xml version=\"1.0\"?><Response><Errors><Error><Code>#{error_code}</Code><Message>#{msg}</Message></Error></Errors><RequestID>0</RequestID></Response>"
+end
+
 $econe_server = EC2QueryServer.new(CONFIGURATION_FILE,
     TEMPLATE_LOCATION, VIEWS_LOCATION)
 
@@ -60,7 +68,7 @@ set :port, $econe_server.config[:port]
 
 before do
     if !$econe_server.authenticate?(params)
-        halt 401, 'Invalid credentials'
+        halt 401, to_aws_error('Invalid credentials')
     end
 end
 
@@ -81,7 +89,7 @@ post '/' do
     end
     
     if OpenNebula::is_error?(result)
-        halt rc, result.message
+        halt rc, to_aws_error(result.message)
     end
 
     result
