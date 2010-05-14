@@ -46,7 +46,12 @@
 ONE_LOCATION=ENV["ONE_LOCATION"]
 
 if !ONE_LOCATION
+  _libdir = File.join(File.dirname(__FILE__), "..", "lib")
+  if (Dir.chdir(_libdir) { true } rescue false)
+    RUBY_LIB_LOCATION = _libdir
+  else
     RUBY_LIB_LOCATION="/usr/lib/one/ruby"
+  end
 else
     RUBY_LIB_LOCATION=ONE_LOCATION+"/lib/ruby"
 end
